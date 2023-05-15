@@ -15,8 +15,8 @@ export function NoteForm({
   onSubmit,
   onAddTag,
   availableTags,
-  title = "",
-  markdown = "",
+  title = "Title",
+  markdown = "New note",
   tags = [],
 }: NoteFormProps) {
   const titleRef = useRef<HTMLInputElement>(null)

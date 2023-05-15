@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Col,
+  Container,
   Form,
   Modal,
   Row,
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom"
 import ReactSelect from "react-select"
 import { Tag } from "./App"
 import styles from "./NoteList.module.css"
+import react from '@vitejs/plugin-react';
 
 type SimplifiedNote = {
   tags: Tag[]
@@ -60,15 +62,16 @@ export function NoteList({
 
   return (
     <>
+      
+      <Container className="align-items-center">
       <Row className="align-items-center mb-4">
-        <Col>
-          <h1>Notes</h1>
-        </Col>
         <Col xs="auto">
+          
           <Stack gap={2} direction="horizontal">
             <Link to="/new">
               <Button variant="primary">Create</Button>
             </Link>
+            
             <Button
               onClick={() => setEditTagsModalIsOpen(true)}
               variant="outline-secondary"
@@ -78,13 +81,15 @@ export function NoteList({
           </Stack>
         </Col>
       </Row>
+      
       <Form>
         <Row className="mb-4">
           <Col>
             <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label hidden>Title</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="create notes..."
                 value={title}
                 onChange={e => setTitle(e.target.value)}
               />
@@ -92,8 +97,9 @@ export function NoteList({
           </Col>
           <Col>
             <Form.Group controlId="tags">
-              <Form.Label>Tags</Form.Label>
+              <Form.Label hidden>Tags</Form.Label>
               <ReactSelect
+                placeholder="create tags..."
                 value={selectedTags.map(tag => {
                   return { label: tag.label, value: tag.id }
                 })}
@@ -109,6 +115,7 @@ export function NoteList({
                 }}
                 isMulti
               />
+
             </Form.Group>
           </Col>
         </Row>
@@ -127,6 +134,10 @@ export function NoteList({
         handleClose={() => setEditTagsModalIsOpen(false)}
         availableTags={availableTags}
       />
+    </Container>
+    <Badge bg="secondary" className="mt-2">
+      {filteredNotes.length} notes
+    </Badge>
     </>
   )
 }
